@@ -17,4 +17,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('jobs', 'JobsController');
+//Authentication
+Route::post('/register', 'Auth\RegisterController@register');
+
+Route::post('password/email', 
+    'Auth\ForgotPasswordController@getResetToken');
+
+Route::group(['prefix' => 'jobs'], function ($app) {
+    Route::get('/','JobsController@index');
+    Route::get('{id}', 'JobsController@find');
+});
+
+Route::group(['middleware' => ['auth:api'], 'prefix' => 'jobs'], function ($app) {
+    Route::post('/','JobsController@store');
+});
+
+
