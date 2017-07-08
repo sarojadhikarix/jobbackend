@@ -7,6 +7,7 @@ USE App\Jobs;
 
 use Illuminate\Support\Str;
 use App\Transformers\JobsTransformer;
+use Carbon\Carbon;
 
 class JobsController extends Controller
 {
@@ -44,7 +45,40 @@ class JobsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $job = new jobs;
+        $job->title = $request->title;
+        $job->description = $request->description;
+        $job->category = $request->category;
+        $job->company_name = $request->company_name;
+        $job->company_website = $request->company_website;
+        $job->company_email = $request->company_email;
+        $job->company_phone = $request->company_phone;
+        $job->company_logo = $request->company_logo;
+        $job->company_facebook = $request->company_facebook;
+        $job->company_video = $request->company_video;
+        $job->keywords = $request->keywords;
+        $job->type = $request->type;
+        $job->requirements = $request->requirements;
+        $job->user_id = $request->user_id;
+        $job->finish = $request->finish;
+        $job->city = $request->city;
+        $job->district = $request->district;
+        $job->zone = $request->zone;
+        $job->country = $request->country;
+
+        if(empty($request->created_at))
+            $job->created_at = Carbon::now();
+        else
+         $job->created_at = $request->created_at;
+
+     $job->updated_at = Carbon::now();
+
+     $job->save();
+
+     return fractal()
+     ->item($job)
+     ->transformWith(new JobsTransformer)
+     ->toArray();
     }
 
     /**
@@ -53,9 +87,23 @@ class JobsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function find($id)
     {
-        //
+        $job = Jobs::find($id);
+
+        if(count($job)){
+            return fractal()
+            ->item($job)
+            ->parseIncludes([])
+            ->transformWith(new JobsTransformer)
+            ->toArray();
+        }
+        else{
+            return response()->json([
+                'data' => [
+                    'status' => 'Job is not available or deleted!']
+                ], 404);
+        }
     }
 
     /**
