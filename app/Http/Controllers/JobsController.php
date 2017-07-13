@@ -18,7 +18,7 @@ class JobsController extends Controller
      */
     public function index()
     {
-            $jobs = Jobs::get();
+            $jobs = Jobs::latest()->where('status', '1')->get();
 
             return fractal()
             ->collection($jobs)
@@ -65,6 +65,7 @@ class JobsController extends Controller
         $job->district = $request->district;
         $job->zone = $request->zone;
         $job->country = $request->country;
+        $job->status = 0;
 
         if(empty($request->created_at))
             $job->created_at = Carbon::now();
@@ -73,12 +74,17 @@ class JobsController extends Controller
 
      $job->updated_at = Carbon::now();
 
-     $job->save();
+     try{
+            $job->save();
+        } catch (\PDOException $e){
+            return 'data:' . json_encode(array(array('message'=>'Something worng! Please try again...')));
+        }
 
-     return fractal()
-     ->item($job)
-     ->transformWith(new JobsTransformer)
-     ->toArray();
+        return 'data:' . json_encode(array(array('message'=>'Job successfully added.')));
+     // return fractal()
+     // ->item($job)
+     // ->transformWith(new JobsTransformer)
+     // ->toArray();
     }
 
     /**
