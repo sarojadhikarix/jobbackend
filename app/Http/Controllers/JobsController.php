@@ -18,11 +18,10 @@ class JobsController extends Controller
      */
     public function index()
     {
-            $jobs = Jobs::latest()->where('status', '1')->get();
-
+            $jobs = Jobs::whereDate('finish', '>=', Carbon::today()->toDateString())->orderBy('finish', 'asc')->get();
             return fractal()
             ->collection($jobs)
-            ->parseIncludes(['users'])
+            ->parseIncludes(['category'])
             ->transformWith(new JobsTransformer)
             ->toArray();
     }
@@ -48,7 +47,7 @@ class JobsController extends Controller
         $job = new jobs;
         $job->title = $request->title;
         $job->description = $request->description;
-        $job->category = $request->category;
+        $job->category_id = $request->category;
         $job->company_name = $request->company_name;
         $job->company_website = $request->company_website;
         $job->company_email = $request->company_email;
@@ -100,7 +99,7 @@ class JobsController extends Controller
         if(count($job)){
             return fractal()
             ->item($job)
-            ->parseIncludes([])
+            ->parseIncludes(['category'])
             ->transformWith(new JobsTransformer)
             ->toArray();
         }
@@ -108,6 +107,28 @@ class JobsController extends Controller
             return response()->json([
                 'data' => [
                     'status' => 'Job is not available or deleted!']
+                ], 404);
+        }
+    }
+
+    public function sort($name){
+        if($name == 'finish'){
+        $jobs = Jobs::whereDate('finish', '>=', Carbon::today()->toDateString())->where('status', '=', 1)->orderBy('finish', 'asc')->get();
+    }else{
+        $jobs = Jobs::whereDate('finish', '>=', Carbon::today()->toDateString())->where('status', '=', 1)->orderBy($name, 'desc')->get();
+    }
+
+        if(count($jobs)){
+            return fractal()
+            ->collection($jobs)
+            ->parseIncludes(['users'])
+            ->transformWith(new JobsTransformer)
+            ->toArray();
+        }
+        else{
+            return response()->json([
+                'data' => [
+                    'status' => 'Something Wrong!']
                 ], 404);
         }
     }
@@ -144,5 +165,31 @@ class JobsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search(Request $request){
+
+        $keyword = $request->keyword;
+        $location = $request->location;
+        if($keyword != '' || $location != ''){
+            $jobs = Jobs::Search($keyword, $location)->get();
+                if(count($jobs) > 0){
+                    return fractal()
+                    ->collection($jobs)
+                    ->parseIncludes(['category'])
+                    ->transformWith(new JobsTransformer)
+                    ->toArray();
+                 }else{
+                return response()->json([
+                    'error' => [
+                        'status' => 'Search not found!']
+                    ]);
+                 }
+        } else{
+            return response()->json([
+                'error' => [
+                    'status' => 'Search not found!']
+                ]);
+        }
     }
 }

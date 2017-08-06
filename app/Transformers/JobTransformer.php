@@ -6,12 +6,15 @@ use App\Jobs;
 use League\Fractal\TransformerAbstract;
 
 class JobsTransformer extends TransformerAbstract{
+
+protected $availableIncludes = ['category'];
+
     public function transform(Jobs $jobs){
         return [
             'id' => (int) $jobs -> id,
             'title' => $jobs -> title,
             'description' => $jobs -> description,
-            'category' => $jobs -> category,
+            'category_id' => $jobs -> category_id,
             'company_name' => $jobs -> company_name,
             'company_website' => $jobs -> company_website,
             'company_email' => $jobs -> company_email,
@@ -28,8 +31,22 @@ class JobsTransformer extends TransformerAbstract{
             'finish' => $jobs -> finish,
             'city' => $jobs -> city,
             'district' => $jobs -> district,
-            'country' => $jobs -> country
-
+            'country' => $jobs -> country,
+            'zone' => $jobs -> zone,
+            'status' => $jobs -> status
         ];
     }
+
+    public function includeCategory(Jobs $job)
+    {
+        if($job->category != null)
+        {
+            return $this->item(
+                $job->category,
+                new CategoryBriefTransformer
+                );
+        }
+    }
+
+
 }

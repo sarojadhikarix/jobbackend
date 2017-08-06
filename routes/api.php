@@ -28,8 +28,24 @@ Route::group(['prefix' => 'jobs'], function ($app) {
     Route::get('{id}', 'JobsController@find');
 });
 
+Route::get('jobs/sort-by/{name}', 'JobsController@sort');
+
 Route::group(['middleware' => ['auth:api'], 'prefix' => 'jobs'], function ($app) {
     Route::post('/','JobsController@store');
 });
+
+Route::group(['prefix' => 'categories'], function ($app) {
+    Route::get('/','CategoryController@index');
+    Route::get('{id}', 'CategoryController@find');
+});
+
+Route::group(['middleware' => ['auth:api'], 'prefix' => 'categories'], function ($app) {
+    Route::post('/','CategoryController@store');
+});
+
+Route::post('search/', 'JobsController@search');
+
+Route::post('sendmail/', 'MailController@send');
+
 
 
