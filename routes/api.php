@@ -47,5 +47,13 @@ Route::post('search/', 'JobsController@search');
 
 Route::post('sendmail/', 'MailController@send');
 
+Route::group(['prefix' => 'cv'], function ($app) {
+    Route::get('{id}', 'CVController@find');
+    Route::post('addfile', 'CVController@storefile');
+    Route::delete('file/{id}', 'CVController@deletefile');
+    Route::post('add', 'CVController@add');
+    Route::delete('{id}', 'CVController@delete');
+});
+
 
 
