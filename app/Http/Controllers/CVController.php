@@ -18,11 +18,11 @@ class CVController extends Controller
     //Display one requested cv
     public function find($id)
     {
-        $cv = cv::where('user_id', $id)->get();
+        $cv = cv::where('user_id', $id)->first();
 
         if(count($cv)){
             return fractal()
-            ->collection($cv)
+            ->item($cv)
             ->parseIncludes([])
             ->transformWith(new CVTransformer)
             ->toArray();
@@ -45,27 +45,50 @@ class CVController extends Controller
 
         $filename = $request->user_id . '_cv.pdf';
         
-        $path = $request->file('cv_file')->storeAs(
-        'cv', $filename
+
+        try{
+            $path = $request->file('cv_file')->storeAs(
+            'public/cv', $filename
         );
+        } catch (\PDOException $e){
+            $returnData = array(
+                'error' => 'Something worng! Error while uploading file.'
+            );
 
+            return response()->json($returnData, 200);
+        }
 
-        return $filename;
+            $returnData = array(
+                'success' => 'CV file successfully uploaded.',
+                'filename' => $filename
+            );
+
+            return response()->json($returnData, 200);
     }
 
     public function deletefile($id){
-        $filename = 'cv/' . $id . '_cv.pdf';
-        Storage::delete($filename);
+        $filename = 'public/cv/' . $id . '_cv.pdf';
+        
+        try{
+            Storage::delete($filename);
+        } catch (\PDOException $e){
+            return 'data:' . json_encode(array(array('message'=>'Something worng! Error while deleting file.')));
+        }
+        return 'data:' . json_encode(array(array('message'=>'CV file successfully deleted.')));
     }
 
     public function add(Request $request)
     {
+    // If policy return true => authorized
+    //This authorize only user who own the post can edit it.
+    //$this->authorize('add', $request);
+
         $this->validate(request(), [
-            'user_id' => 'required',
+            'user_id' => 'required | unique:CV,user_id,' . $request->user_id,
             'professional_title' => 'required',
             'address' => 'required',
             'skills' => 'required',
-            'wish' => 'required',
+            'wish' => 'required | max:1300',
             'cv_link' => 'required',
             'status' => 'required',
         ]);
@@ -84,13 +107,26 @@ class CVController extends Controller
      try{
             $cv->save();
         } catch (\PDOException $e){
-            return 'data:' . json_encode(array(array('message'=>'Something worng! Please try again...')));
+
+            $returnData = array(
+                'message' => 'Something worng! Please try again...'
+            );
+
+            return response()->json($returnData, 200);
         }
 
-        return 'data:' . json_encode(array(array('message'=>'CV successfully added.')));
+            $returnData = array(
+                'message' => 'CV successfully added.'
+            );
+
+            return response()->json($returnData, 200);
+
     }
 
     public function delete($id){
+        // If policy return true => authorized
+        //This authorize only user who own the post can edit it.
+    $this->authorize('delete', $id);
         try{
             $deleteddata = cv::where('user_id', $id)->delete();
             $this->deletefile($id);
@@ -101,9 +137,28 @@ class CVController extends Controller
 
     }
 
-    publc function update($id){
-        
+ public function update(Request $request)
+ {
+        // If policy return true => authorized
+        //This authorize only user who own the post can edit it.
+    $this->authorize('update', $request);
+    try{
+    $edited_character = cv::where('user_id', $request->user_id)->update([
+        'professional_title' => $request->professional_title,
+        'address' => $request->address,
+        'skills' => $request->skills,
+        'wish' => $request->wish,
+        'cv_link' => $request->cv_link,
+        'status' => $request->status,
+        'updated_at' => Carbon::now(),
+        //others property
+    ]);
+    }catch (\PDOException $e){
+            return 'data:' . json_encode(array(array('message'=>'Something worng while updating! Please try again...')));
     }
+    return 'data:' . json_encode(array(array('message'=>'CV successfully updated.')));
+
+}
 
 
 }
