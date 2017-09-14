@@ -30,8 +30,8 @@ class CVController extends Controller
         else{
             return response()->json([
                 'data' => [
-                    'status' => 'cv is not available or deleted!']
-                ], 404);
+                    'status' => 'not_found']
+                ], 200);
         }
     }
 
@@ -100,7 +100,7 @@ class CVController extends Controller
         $cv->skills = $request->skills;
         $cv->wish = $request->wish;
         $cv->cv_link = $request->cv_link;
-        $cv->status = $request->status;
+        $cv->status = 1;
         $cv->created_at = Carbon::now();
         $cv->updated_at = Carbon::now();
 

@@ -183,13 +183,13 @@ class JobsController extends Controller
                 return response()->json([
                     'error' => [
                         'status' => 'Search not found!']
-                    ]);
+                    ], 404);
                  }
         } else{
             return response()->json([
                 'error' => [
                     'status' => 'Search not found!']
-                ]);
+                ], 404);
         }
     }
 }

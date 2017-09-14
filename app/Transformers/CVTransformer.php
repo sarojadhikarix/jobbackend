@@ -18,7 +18,8 @@ protected $availableIncludes = ['user'];
             'skills' => $cv -> skills,
             'wish' => $cv -> wish,
             'cv_link' => $cv -> cv_link,
-            'status' => $cv -> status
+            'status' => $cv -> status,
+            'updated_at' => $cv -> updated_at
         ];
     }
 

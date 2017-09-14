@@ -19,18 +19,48 @@ class Jobs extends Model
      return $this->belongsTo(Category::class);
   }
 
-  public function scopeSearch($query, $keyword, $location){
+  // public function scopeSearch($query, $keyword, $location){
+  //     if($keyword != '' || $location != ''){
+  //         return $query->where(function($query) use ($keyword){
+  //                         $query->where('title', 'like', '%' .$keyword. '%')
+  //                               ->orWhere('keywords', 'like', '%' .$keyword. '%')
+  //                               ->orWhere('company_name', 'like', '%' .$keyword. '%');
+  //                         })
+  //                      ->where(function($query) use ($location){
+  //                         $query->where('city', 'like', '%' .$location. '%')
+  //                               ->orWhere('district', 'like', '%' .$location. '%')
+  //                               ->orWhere('zone', 'like', '%' .$location. '%')
+  //                               ->orWhere('country', 'like', '%' .$location. '%');
+  //                         })
+  //                      ->whereDate('finish', '>=', Carbon::today()->toDateString())
+  //                      ->orderBy('finish', 'asc');
+                       
+  //                    }
+  // }
+
+    public function scopeSearch($query, $keyword, $location){
       if($keyword != '' || $location != ''){
-          return $query->where(function($query) use ($keyword){
-                          $query->where('title', 'like', '%' .$keyword. '%')
-                                ->orWhere('keywords', 'like', '%' .$keyword. '%')
-                                ->orWhere('company_name', 'like', '%' .$keyword. '%');
+ 
+        
+
+          return $query->where(function($query) use ($keyword){      
+
+                          $searchKeyword = preg_split('/\s+/', $keyword, -1, PREG_SPLIT_NO_EMPTY);
+                          foreach ($searchKeyword as $val) {
+                            $query->where('title', 'like', '%' .$val. '%')
+                                  ->orWhere('keywords', 'like', '%' .$val. '%')
+                                  ->orWhere('company_name', 'like', '%' .$val. '%');
+                              }
                           })
                        ->where(function($query) use ($location){
-                          $query->where('city', 'like', '%' .$location. '%')
-                                ->orWhere('district', 'like', '%' .$location. '%')
-                                ->orWhere('zone', 'like', '%' .$location. '%')
-                                ->orWhere('country', 'like', '%' .$location. '%');
+
+                          $searchLocation = preg_split('/\s+/', $location, -1, PREG_SPLIT_NO_EMPTY); 
+                          foreach ($searchLocation as $val) {
+                            $query->where('city', 'like', '%' .$val. '%')
+                                  ->orWhere('district', 'like', '%' .$val. '%')
+                                  ->orWhere('zone', 'like', '%' .$val. '%')
+                                  ->orWhere('country', 'like', '%' .$val. '%');
+                                }
                           })
                        ->whereDate('finish', '>=', Carbon::today()->toDateString())
                        ->orderBy('finish', 'asc');
