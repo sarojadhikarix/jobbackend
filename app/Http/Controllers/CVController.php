@@ -49,7 +49,7 @@ class CVController extends Controller
         try{
             $path = $request->file('cv_file')->storeAs(
             'public/cv', $filename
-        );
+            );
         } catch (\PDOException $e){
             $returnData = array(
                 'error' => 'Something worng! Error while uploading file.'
@@ -126,7 +126,7 @@ class CVController extends Controller
     public function delete($id){
         // If policy return true => authorized
         //This authorize only user who own the post can edit it.
-    $this->authorize('delete', $id);
+    //$this->authorize('delete', $id);
         try{
             $deleteddata = cv::where('user_id', $id)->delete();
             $this->deletefile($id);
@@ -141,7 +141,7 @@ class CVController extends Controller
  {
         // If policy return true => authorized
         //This authorize only user who own the post can edit it.
-    $this->authorize('update', $request);
+    //$this->authorize('update', $request);
     try{
     $edited_character = cv::where('user_id', $request->user_id)->update([
         'professional_title' => $request->professional_title,

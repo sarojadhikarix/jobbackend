@@ -56,5 +56,10 @@ Route::group(['middleware' => ['auth:api'], 'prefix' => 'cv'], function ($app) {
     Route::post('update','CVController@update');
 });
 
+Route::group(['middleware' => ['auth:api'], 'prefix' => 'propic'], function ($app) {
+    Route::post('add', 'ImageuploadController@store');
+    Route::post('update','ImageuploadController@update');
+    Route::delete('{id}', 'ImageuploadController@delete');
+});
 
 
