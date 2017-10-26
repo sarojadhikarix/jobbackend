@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
@@ -80,12 +81,21 @@ class ImageuploadController extends Controller
 	   		imagepng($newImage, $save );
 	        } catch (\PDOException $e){
 	            $returnData = array(
-	                'error' => 'Something worng! Error while uploading image.'
+	                'error' => 'Something worng! Problem on moving files.'
 	            );
 
 	            return response()->json($returnData, 200);
 	        }
 
+	        	try{
+	   				User::where('id', $request->user_id)->update(array('propic_status' => '1'));
+	        	} catch(\PDOException $e){
+	        		$returnData = array(
+	                'error' => 'Something worng! Problem while adding database.'
+	            );
+
+	            return response()->json($returnData, 200);
+	        	}
 
 	            $returnData = array(
 	                'success' => 'Image successfully uploaded.',
