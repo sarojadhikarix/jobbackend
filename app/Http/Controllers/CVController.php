@@ -90,7 +90,6 @@ class CVController extends Controller
             'skills' => 'required',
             'wish' => 'required | max:1300',
             'cv_link' => 'required',
-            'status' => 'required',
         ]);
 
         $cv = new cv;
@@ -131,9 +130,9 @@ class CVController extends Controller
             $deleteddata = cv::where('user_id', $id)->delete();
             $this->deletefile($id);
         } catch (\PDOException $e){
-            return 'data:' . json_encode(array(array('message'=>'Something worng! Please try again...')));
+            return 'data:' . json_encode(array('message'=>'Something worng! Please try again...'));
         }
-        return 'data:' . json_encode(array(array('message'=>'CV successfully deleted.')));
+        return 'data:' . json_encode(array('message'=>'CV successfully deleted.'));
 
     }
 
