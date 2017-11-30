@@ -33,7 +33,9 @@ protected $availableIncludes = ['category'];
             'district' => $jobs -> district,
             'country' => $jobs -> country,
             'zone' => $jobs -> zone,
-            'status' => $jobs -> status
+            'status' => $jobs -> status,
+            'filled' => $jobs -> filled,
+            'applicant_count' => $jobs -> applicant_count
         ];
     }
 

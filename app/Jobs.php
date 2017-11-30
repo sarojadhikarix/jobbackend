@@ -63,7 +63,7 @@ class Jobs extends Model
                                 }
                           })
                        ->whereDate('finish', '>=', Carbon::today()->toDateString())
-                       ->orderBy('finish', 'asc');
+                       ->orderBy('finish', 'asc')->where('status', '=', 1);
                        
                      }
   }

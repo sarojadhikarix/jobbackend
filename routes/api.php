@@ -26,12 +26,18 @@ Route::post('password/email',
 Route::group(['prefix' => 'jobs'], function ($app) {
     Route::get('/','JobsController@index');
     Route::get('{id}', 'JobsController@find');
+    Route::get('user/{id}', 'JobsController@findByUser');
 });
 
 Route::get('jobs/sort-by/{name}', 'JobsController@sort');
 
 Route::group(['middleware' => ['auth:api'], 'prefix' => 'jobs'], function ($app) {
     Route::post('/','JobsController@store');
+    Route::post('update','JobsController@update');
+    Route::post('addstatus','JobsController@addJobStatus');
+    Route::post('updatestatus','JobsController@updateJobStatus');
+    Route::get('getstatus/{id}','JobsController@findJobStatus');
+
 });
 
 Route::group(['prefix' => 'categories'], function ($app) {
