@@ -159,5 +159,31 @@ class CVController extends Controller
 
 }
 
+    public function search(Request $request){
+
+        $keyword = $request->keyword;
+        $location = $request->location;
+        if($keyword != '' || $location != ''){
+            $cv = cv::Search($keyword, $location)->get();
+                if(count($cv) > 0){
+                    return fractal()
+                    ->collection($cv)
+                    ->parseIncludes(['user'])
+                    ->transformWith(new CVTransformer)
+                    ->toArray();
+                 }else{
+                return response()->json([
+                    'error' => [
+                        'status' => 'Search not found!']
+                    ], 404);
+                 }
+        } else{
+            return response()->json([
+                'error' => [
+                    'status' => 'Search not found!']
+                ], 404);
+        }
+    }
+
 
 }

@@ -23,10 +23,11 @@ protected $availableIncludes = ['user'];
         ];
     }
 
-    public function includeJobs(cv $cv)
+    public function includeUser(cv $cv)
 	{
-		return $this->collection(
-			$cv->user, 
-			new UserTransformer);
-	}
+            return $this->item(
+                $cv->user,
+                new UserBriefTransformer
+                );
+    }
 }

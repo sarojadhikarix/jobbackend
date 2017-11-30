@@ -60,12 +60,14 @@ Route::group(['middleware' => ['auth:api'], 'prefix' => 'cv'], function ($app) {
     Route::post('add', 'CVController@add');
     Route::delete('{id}', 'CVController@delete');
     Route::post('update','CVController@update');
+    Route::post('search/', 'CVController@search');
 });
 
 Route::group(['middleware' => ['auth:api'], 'prefix' => 'propic'], function ($app) {
     Route::post('add', 'ImageuploadController@store');
     Route::post('update','ImageuploadController@update');
     Route::delete('{id}', 'ImageuploadController@delete');
+
 });
 
 

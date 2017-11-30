@@ -216,17 +216,6 @@ class JobsController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -236,7 +225,6 @@ class JobsController extends Controller
      */
     public function destroy($id)
     {
-        //
     }
 
     public function search(Request $request){
@@ -339,28 +327,28 @@ class JobsController extends Controller
     public function update(Request $request)
     {
         try{
-        $edited_character = Jobs::where('job_id', $request->$id)->update([
-            'title' = $request->title,
-            'description' = $request->description,
-            'category_id' = $request->category_id,
-            'company_name' = $request->company_name,
-            'company_email' = $request->company_email,
-            'company_phone' = $request->company_phone,
-            'keywords' = $request->keywords,
-            'type' = $request->type,
-            'requirements' = $request->requirements,
-            'finish' = $request->finish,
-            'city' = $request->city,
-            'country' = $request->country,
-            'status' = 0,
-            'company_website' = $request->company_website,
-            'company_logo' = $request->company_logo,
-            'company_facebook' = $request->company_facebook,
-            'company_video' = $request->company_video,
-            'district' = $request->district,
-            'zone' = $request->zone,
-            'filled' = 0,
-            'applicant_count' = 0,
+        Jobs::where('id', $request->id)->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'category_id' => $request->category_id,
+            'company_name' => $request->company_name,
+            'company_email' => $request->company_email,
+            'company_phone' => $request->company_phone,
+            'keywords' => $request->keywords,
+            'type' => $request->type,
+            'requirements' => $request->requirements,
+            'finish' => $request->finish,
+            'city' => $request->city,
+            'country' => $request->country,
+            'status' => $request->status,
+            'company_website' => $request->company_website,
+            'company_logo' => $request->company_logo,
+            'company_facebook' => $request->company_facebook,
+            'company_video' => $request->company_video,
+            'district' => $request->district,
+            'zone' => $request->zone,
+            'filled' => $request->filled,
+            'applicant_count' => $request->applicant_count
         ]);
         }catch (\PDOException $e){
             $returnData = array(
