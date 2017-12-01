@@ -14,6 +14,7 @@ class UserBriefTransformer extends TransformerAbstract
             'name' => $user -> name,
             'role_id' => $user -> role_id,
             'email' => $user -> email,
+            'propic' => $user -> propic_status,
 		];
 	}
 }

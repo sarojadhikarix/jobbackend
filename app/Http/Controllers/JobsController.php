@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 USE App\Jobs;
-use App\JobStatus;
-
+USE App\JobStatus;
 use Illuminate\Support\Str;
 use App\Transformers\JobsTransformer;
 use App\Transformers\JobStatusTransformer;
@@ -254,9 +253,9 @@ class JobsController extends Controller
     }
 
 
-     public function findJobStatus($id)
+     public function findJobStatus($job_id, $user_id)
     {
-        $stats = JobStatus::where('job_id', '=', $id)->get();
+        $stats = JobStatus::where('job_id', '=', $job_id)->where('user_id', '=', $user_id)->get();
 
         if(count($stats)){
             return fractal()
@@ -306,6 +305,16 @@ class JobsController extends Controller
         $jobStatus->user_id = $request->user_id;
         $jobStatus->job_id = $request->job_id;
         $jobStatus->status = $request->status;
+
+        $stats = JobStatus::where('job_id', '=', $request->job_id)->where('user_id', '=', $request->user_id)->get();
+
+        if(count($stats)>= 1){
+            $returnData = array(
+                'message' => 'Already applied.'
+            );
+
+            return response()->json($returnData, 422);
+        }else{
         
      try{
             $jobStatus->save();
@@ -322,6 +331,7 @@ class JobsController extends Controller
         );
 
         return response()->json($returnData, 200);
+    }
     }
 
     public function update(Request $request)
