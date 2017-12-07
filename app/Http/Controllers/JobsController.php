@@ -253,21 +253,45 @@ class JobsController extends Controller
     }
 
 
-     public function findJobStatus($job_id, $user_id)
+     public function findJobStatus(Request $request)
     {
-        $stats = JobStatus::where('job_id', '=', $job_id)->where('user_id', '=', $user_id)->get();
+        $job_id = $request->job_id;
+        $user_id = $request->user_id;
+
+        if($job_id != '' && $user_id != '')
+        {
+            $stats = JobStatus::where('job_id', '=', $job_id)->where('user_id', '=', $user_id)->orderBy('id', 'desc')->get();
+        }else if($job_id == '' && $user_id != ''){
+            $stats = JobStatus::where('user_id', '=', $user_id)->orderBy('id', 'desc')->get();
+        }else if($job_id != '' && $user_id == ''){
+            $stats = JobStatus::where('job_id', '=', $job_id)->orderBy('id', 'desc')->get();
+        }else{
+            $stats = JobStatus::where('job_id', '=', $job_id)->where('user_id', '=', $user_id)->orderBy('id', 'desc')->get();
+        }
 
         if(count($stats)){
-            return fractal()
-            ->item($stats)
-            ->parseIncludes([])
-            ->transformWith(new JobStatusTransformer)
-            ->toArray();
+            for($i = 0; $i < count($stats); $i++){
+            $jobs[$i] =  Jobs::find($stats[$i]->job_id);
+            }
+
+            if(count($jobs)){
+                return fractal()
+                ->collection($jobs)
+                ->parseIncludes(['category'])
+                ->transformWith(new JobsTransformer)
+                ->toArray();
+            }
+            else{
+                return response()->json([
+                    'data' => [
+                        'status' => 'Job Deleted or changed.']
+                        ], 404);
+                }
         }
         else{
             return response()->json([
                 'data' => [
-                    'status' => 'Job is not available or deleted!']
+                    'status' => 'none']
                 ], 404);
         }
     }

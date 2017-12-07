@@ -36,7 +36,7 @@ Route::group(['middleware' => ['auth:api'], 'prefix' => 'jobs'], function ($app)
     Route::post('update','JobsController@update');
     Route::post('addstatus','JobsController@addJobStatus');
     Route::post('updatestatus','JobsController@updateJobStatus');
-    Route::get('getstatus/{job_id}/{user_id}','JobsController@findJobStatus');
+    Route::post('getstatus','JobsController@findJobStatus');
 
 });
 
