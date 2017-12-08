@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 use App\Transformers\JobsTransformer;
 use App\Transformers\JobStatusTransformer;
 use Carbon\Carbon;
+use App\User;
+use App\Transformers\UserTransformer;
 
 class JobsController extends Controller
 {
@@ -257,6 +259,8 @@ class JobsController extends Controller
     {
         $job_id = $request->job_id;
         $user_id = $request->user_id;
+        $stats = NULL;
+        $statsusers = NULL;
 
         if($job_id != '' && $user_id != '')
         {
@@ -264,9 +268,7 @@ class JobsController extends Controller
         }else if($job_id == '' && $user_id != ''){
             $stats = JobStatus::where('user_id', '=', $user_id)->orderBy('id', 'desc')->get();
         }else if($job_id != '' && $user_id == ''){
-            $stats = JobStatus::where('job_id', '=', $job_id)->orderBy('id', 'desc')->get();
-        }else{
-            $stats = JobStatus::where('job_id', '=', $job_id)->where('user_id', '=', $user_id)->orderBy('id', 'desc')->get();
+            $statsusers = JobStatus::where('job_id', '=', $job_id)->orderBy('id', 'desc')->get();
         }
 
         if(count($stats)){
@@ -288,12 +290,33 @@ class JobsController extends Controller
                         ], 404);
                 }
         }
-        else{
-            return response()->json([
-                'data' => [
-                    'status' => 'none']
-                ], 404);
-        }
+        else if(count($statsusers)){
+            for($i = 0; $i < count($statsusers); $i++){
+            $users[$i] =  User::find($statsusers[$i]->user_id);
+            }
+
+            if(count($users)){
+                return fractal()
+                ->collection($users)
+                ->parseIncludes([])
+                ->transformWith(new UserTransformer)
+                ->toArray();
+            }
+            else{
+                return response()->json([
+                    'data' => [
+                        'status' => 'User Deleted or changed.']
+                        ], 404);
+                }
+
+            }
+        else
+            {
+                return response()->json([
+                    'data' => [
+                        'status' => 'none']
+                    ], 404);
+            }
     }
 
      public function updateJobStatus(Request $request)
