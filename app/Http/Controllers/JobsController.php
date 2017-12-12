@@ -10,7 +10,7 @@ use App\Transformers\JobsTransformer;
 use App\Transformers\JobStatusTransformer;
 use Carbon\Carbon;
 use App\User;
-use App\Transformers\UserTransformer;
+use App\Transformers\UserBriefTransformer;
 
 class JobsController extends Controller
 {
@@ -299,7 +299,7 @@ class JobsController extends Controller
                 return fractal()
                 ->collection($users)
                 ->parseIncludes([])
-                ->transformWith(new UserTransformer)
+                ->transformWith(new UserBriefTransformer)
                 ->toArray();
             }
             else{

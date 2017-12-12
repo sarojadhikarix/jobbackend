@@ -18,7 +18,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //Authentication
-Route::post('/register', 'Auth\RegisterController@register');
+Route::group(['prefix' => 'register'], function ($app) {
+    Route::post('/', 'Auth\RegisterController@register');
+    Route::get('{id}', 'Auth\RegisterController@find');
+});
+
+Route::group(['middleware' => ['auth:api'], 'prefix' => 'user'], function ($app) {
+    Route::get('{id}', 'UserController@find');
+});
 
 Route::post('password/email', 
     'Auth\ForgotPasswordController@getResetToken');

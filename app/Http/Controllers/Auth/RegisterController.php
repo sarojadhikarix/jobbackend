@@ -52,6 +52,7 @@ class RegisterController extends Controller
             'role_id' => 'required',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'gender' => 'required',
         ]);
     }
 
@@ -69,6 +70,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'propic_status' => '0',
+            'gender' => $data['gender'],
         ]);
     }
 }
