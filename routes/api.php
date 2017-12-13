@@ -30,6 +30,8 @@ Route::group(['middleware' => ['auth:api'], 'prefix' => 'user'], function ($app)
 Route::post('password/email', 
     'Auth\ForgotPasswordController@getResetToken');
 
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
 Route::group(['prefix' => 'jobs'], function ($app) {
     Route::get('/','JobsController@index');
     Route::get('{id}', 'JobsController@find');
