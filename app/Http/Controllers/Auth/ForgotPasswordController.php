@@ -46,13 +46,28 @@ class ForgotPasswordController extends Controller
         if ($request->wantsJson()) {
             $user = User::where('email', $request->input('email'))->first();
             if (!$user) {
-                return response()->json(trans('passwords.user'), 400);
+                $returnData = array(
+                    'message' => trans('passwords.user'),
+                    'status' => false
+                );
+                return response()->json($returnData, 422); 
             }
             $token = $this->broker()->createToken($user);
-            //return response()->json(response(['token' => $token]));
+            try{
+                \Mail::to($request->email)->send(new forgotpasswordmessage($token));
+            }catch(\PDOException $e){
+                $returnData = array(
+                    'message' => 'Mail was not sent. Check your email or write us...',
+                    'status' => false
+                );
+                return response()->json($returnData, 422); 
+            }
+            $returnData = array(
+                'token' => $token,
+                'status' => true
+            );
+            return response()->json($returnData, 200);
         }
-
-        // TODO: Send email to user including Response token
-        \Mail::to($request->email)->send(new forgotpasswordmessage($token));
+        
     }
 }

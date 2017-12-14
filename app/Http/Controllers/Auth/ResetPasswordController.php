@@ -58,9 +58,22 @@ class ResetPasswordController extends Controller
         );
         if ($request->wantsJson()) {
             if ($response == Password::PASSWORD_RESET) {
-                return response()->json(Json::response(null, trans('passwords.reset')));
+                //return response()->json(Json::response('status' = true, trans('passwords.reset')), 200);
+                $returnData = array(
+                    'status' => true,
+                    'email' => trans('passwords.reset'),
+
+                );
+                return response()->json($returnData, 200); 
             } else {
-                return response()->json(Json::response($request->input('email'), trans($response), 202));
+                //return response()->json(Json::response('status' = false, $request->input('email'), trans($response)), 422);
+                $returnData = array(
+                    'status' => false,
+                    'email' => $request->input('email'),
+                    'message' => trans($response),
+
+                );
+                return response()->json($returnData, 422);
             }
         }
         // If the password was successfully reset, we will redirect the user back to
