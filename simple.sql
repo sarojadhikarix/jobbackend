@@ -1,0 +1,721 @@
+-- phpMyAdmin SQL Dump
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jan 03, 2018 at 01:15 PM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `api_job`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
+--
+
+CREATE TABLE `category` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `name`, `status`) VALUES
+(1, 'Accounting / Finance', 1),
+(2, 'Computer / IT', 1),
+(3, 'Restaurant / Food Service', 1),
+(4, 'Healthcare', 1),
+(5, 'Construction / Facilities', 1),
+(6, 'Automotive Jobs', 1),
+(7, 'Education Training', 1),
+(8, ' Healthcare', 1),
+(9, 'Transportation / Logistics', 1),
+(10, 'Telecommunications', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cv`
+--
+
+CREATE TABLE `cv` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `professional_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `skills` varchar(2000) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wish` varchar(5000) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cv_link` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `email`
+--
+
+CREATE TABLE `email` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `byemail` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `toemail` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` varchar(2000) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gender`
+--
+
+CREATE TABLE `gender` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `gender` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `gender`
+--
+
+INSERT INTO `gender` (`id`, `gender`) VALUES
+(1, 'Male'),
+(2, 'Female'),
+(3, 'Other'),
+(4, 'Company');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jobs`
+--
+
+CREATE TABLE `jobs` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(5000) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_id` int(10) UNSIGNED NOT NULL,
+  `company_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `company_website` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `company_email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `company_phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `company_logo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `company_facebook` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `company_video` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keywords` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `requirements` varchar(3000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `finish` datetime NOT NULL,
+  `city` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `district` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `zone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL,
+  `filled` tinyint(1) NOT NULL,
+  `applicant_count` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `job_status`
+--
+
+CREATE TABLE `job_status` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `job_id` int(10) UNSIGNED NOT NULL,
+  `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2014_10_12_100000_create_password_resets_table', 1),
+(3, '2017_07_06_082423_create_jobs_table', 1),
+(4, '2016_06_01_000001_create_oauth_auth_codes_table', 2),
+(5, '2016_06_01_000002_create_oauth_access_tokens_table', 2),
+(6, '2016_06_01_000003_create_oauth_refresh_tokens_table', 2),
+(7, '2016_06_01_000004_create_oauth_clients_table', 2),
+(8, '2016_06_01_000005_create_oauth_personal_access_clients_table', 2),
+(9, '2017_07_12_112313_add_status_to_jobs_table', 3),
+(10, '2017_07_14_155102_create_categories_table', 4),
+(11, '2017_07_14_161711_add_status_to_category', 5),
+(12, '2017_07_14_162146_add_connection_to_category', 6),
+(13, '2017_08_07_112356_create_roles_table', 7),
+(14, '2017_08_07_112713_add_role_to_users_table', 8),
+(15, '2017_08_07_113149_create_rolestable', 9),
+(16, '2017_08_07_122747_create_roles_table', 10),
+(17, '2017_08_07_123829_add_connection_to_roles', 11),
+(18, '2017_08_21_095302_create_cv_table', 12),
+(19, '2017_08_28_100759_create_email_table', 13),
+(20, '2017_10_26_101351_add_propic_to_users', 14),
+(21, '2017_11_30_005942_add_applicant_filled_to_jobs', 15),
+(22, '2017_11_30_012200_create_job_status_table', 16),
+(23, '2017_12_14_001852_create_gender_table', 17),
+(24, '2017_12_14_002500_add_relationship_with_gender_user_table', 18);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_access_tokens`
+--
+
+CREATE TABLE `oauth_access_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `client_id` int(11) NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `oauth_access_tokens`
+--
+
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('058529d01722813bc57a7fd5ad5ecba940fa1eb87ec8ef2da9a61a842526b6c6b8b8fcc548421539', 11, 2, NULL, '[]', 0, '2017-07-13 15:11:30', '2017-07-13 15:11:30', '2018-07-13 17:11:30'),
+('093b27845f13dd97b0a41e825f86d60bb94566f57574b415400070ac94b067a82c60ddb45696d29b', 11, 2, NULL, '[]', 0, '2017-07-11 18:16:33', '2017-07-11 18:16:33', '2018-07-11 20:16:33'),
+('0ae3a6ae81c1d2b115fca51ab68915700dc1c35b924bd3fe26149ab8d99bae98d2842a97c870704d', 52, 2, NULL, '[]', 0, '2017-09-14 09:35:52', '2017-09-14 09:35:52', '2018-09-14 11:35:52'),
+('0af66e796a94efa61de3cbd8c9ad4ba3f25f3a4eea3d7b46e1082d954ffe3e09333489fd346a9467', 52, 2, NULL, '[]', 0, '2017-08-27 11:45:06', '2017-08-27 11:45:06', '2018-08-27 13:45:06'),
+('0bd257a6de65f6459d6aba550ef49da95ae79f38f475b02654a1035d53de4322828ff25e89711e3a', 55, 2, NULL, '[]', 0, '2017-11-06 12:34:28', '2017-11-06 12:34:28', '2018-11-06 13:34:28'),
+('0d39af1b174dc0c93b0c005e2ea54a4f0d1e9295bc575b29f10c37da23baa839051034fd5c0b2ae2', 52, 2, NULL, '[]', 0, '2017-08-08 10:29:09', '2017-08-08 10:29:09', '2018-08-08 12:29:09'),
+('0facc77aa4822fee4a5e445a6cf1c8c47291fa16516240fa712b0273a6039049155f56f0680aa38d', 52, 2, NULL, '[]', 0, '2017-08-08 09:53:17', '2017-08-08 09:53:17', '2018-08-08 11:53:17'),
+('140ed3e509ced2f723bb1ed8e0df8a236518f303d7b74535f064fd55fc83599bbe88e340b55ca906', 11, 2, NULL, '[]', 0, '2017-07-13 10:08:58', '2017-07-13 10:08:58', '2018-07-13 12:08:58'),
+('169bf97633b5f5c4f254d0189d251a4401331e84c9c9848140129cfab958571c81295a7959869859', 52, 2, NULL, '[]', 0, '2017-08-27 11:48:46', '2017-08-27 11:48:46', '2018-08-27 13:48:46'),
+('19ef79f8c93d0d5ba6eefd2580c63bfc8d58168f091cfa5eebb71dd210703f6a0410e81022c024d7', 52, 2, NULL, '[]', 0, '2017-08-14 11:01:59', '2017-08-14 11:01:59', '2018-08-14 13:01:59'),
+('1cf9216995597027fac969f0e442dce77674c2858898eaeebc5b04e801c630a97dfdaffb5a68b32a', 11, 2, NULL, '[]', 0, '2017-07-11 15:32:50', '2017-07-11 15:32:50', '2018-07-11 17:32:50'),
+('25ef89f2fc787a53c2456d7cb96676cad12417b5f224758f60438d491fe557e042e9ca128eaf5001', 11, 2, NULL, '[]', 0, '2017-07-27 10:04:29', '2017-07-27 10:04:29', '2018-07-27 12:04:29'),
+('2685ab77a9eaeaad929d87b8aac831418add2ca5f5f8dccce9365c6903ac702455e8145c5ce52e4a', 11, 2, NULL, '[]', 0, '2017-07-11 18:17:01', '2017-07-11 18:17:01', '2018-07-11 20:17:01'),
+('280ced428893507d6dc6d19b666e7af40799acb1c525009c382c57534aefc5428720f49801c74e16', 56, 2, NULL, '[]', 0, '2017-11-06 12:43:34', '2017-11-06 12:43:34', '2018-11-06 13:43:34'),
+('2cd5927a0fd775cf6e1193d34551d0e2b8900ace267a7c7279517265417ce224dd2e0f9a29c33eac', 52, 2, NULL, '[]', 0, '2017-08-28 11:31:37', '2017-08-28 11:31:37', '2018-08-28 13:31:37'),
+('2e198a9cff9fd40d5f6b4444b4157d9ee413548b9cc1392f1405771421b894cbbbf92c0180c44ad3', 11, 2, NULL, '[]', 0, '2017-07-11 20:15:43', '2017-07-11 20:15:43', '2018-07-11 22:15:43'),
+('2f8cf5e573ba25d816ec79941cdb4d69eeb9a07576dd71384b6ab4f2456a1f2a3504b544658c4398', 11, 2, NULL, '[]', 0, '2017-07-11 20:14:21', '2017-07-11 20:14:21', '2018-07-11 22:14:21'),
+('32042f6144d39712c0246dde14070e30ec5d0e5653e7536fb9346b98132877e8311fbc7bf159a4ca', 52, 2, NULL, '[]', 0, '2017-10-26 09:24:02', '2017-10-26 09:24:02', '2018-10-26 11:24:02'),
+('376dd117ec9e254c10c0e39da6c374d962f00b9d8c1e2a92a5cbeecd2292297d9e67a1f93753664f', 11, 2, NULL, '[]', 0, '2017-07-11 20:19:20', '2017-07-11 20:19:20', '2018-07-11 22:19:20'),
+('37be78221910aba88ee5a0ce7e1373f448eb645e70cb3716bc89069eb6df146cd3c55eba07347a66', 11, 2, NULL, '[]', 0, '2017-07-11 20:11:33', '2017-07-11 20:11:33', '2018-07-11 22:11:33'),
+('381405939231d6f563d7bf7227dd7ffb8ffb6cc841838f98e279655e18eb51f5732ba76f7365d173', 55, 2, NULL, '[]', 0, '2017-12-11 04:12:19', '2017-12-11 04:12:19', '2018-12-11 05:12:19'),
+('3a69a2f95a506bf692fd192f2e2d72271d111f7d52ba44d8a75d68709202dfb6102831e4d5e8e372', 11, 2, NULL, '[]', 0, '2017-07-27 09:12:01', '2017-07-27 09:12:01', '2018-07-27 11:12:01'),
+('3ba420fb1805ce47dac0ac97ec26bf202118af91db266e4100a2ad4a25104b280be9013e5ab7df6d', 52, 2, NULL, '[]', 0, '2017-09-12 08:16:52', '2017-09-12 08:16:52', '2018-09-12 10:16:52'),
+('3d000b9a3a67037452f2dbf8eb6cd9323ff4d07d3269b68d43dd8fe2fe808fb68097ed3a140d1fc3', 58, 2, NULL, '[]', 0, '2017-12-13 01:13:05', '2017-12-13 01:13:05', '2017-12-15 02:13:05'),
+('3eccb719da63df0335a526d8968596b5ccb33da738c429661cbaff84ff70c75ebb4c61d417e0dcb3', 52, 2, NULL, '[]', 0, '2017-08-14 11:11:58', '2017-08-14 11:11:58', '2018-08-14 13:11:58'),
+('3f81dfe1693459c68bd4c72267d2f1a76eabd9a5cd575cf174227fc18f32d2c8c07899e9ba894612', 52, 2, NULL, '[]', 0, '2017-09-14 11:44:21', '2017-09-14 11:44:21', '2018-09-14 13:44:21'),
+('4069b6ac707d5ea621a7283455d6452930228b4839bbe792916bbee48eb44a972ebca1d0b6c1ad1f', 53, 2, NULL, '[]', 0, '2017-08-08 10:17:48', '2017-08-08 10:17:48', '2018-08-08 12:17:48'),
+('443d0cc0dace629d3b2fe9f1fd2e5c1de5df41eaa7cfb6e1cfe33777b62275a443cda62c530c909d', 11, 2, NULL, '[]', 0, '2017-08-07 08:44:28', '2017-08-07 08:44:28', '2018-08-07 10:44:28'),
+('4782f451e17b119fad2c8399ddb29fbf3fe04aeb43bdce4f5b7c111b0cb4043dff66360a5b354a49', 52, 2, NULL, '[]', 0, '2017-08-27 11:48:00', '2017-08-27 11:48:00', '2018-08-27 13:48:00'),
+('47bd85bdf2211e29829070cc910db58ec187ba519be29187dc2d82600245223c658dde79fc8acf1b', 55, 2, NULL, '[]', 0, '2017-12-07 12:43:00', '2017-12-07 12:43:00', '2018-12-07 13:43:00'),
+('4eb2784573e80619b1fc39530ecdafe5f96284858234d3be8e894c28ca158abfb221e3dfe4aee827', 52, 2, NULL, '[]', 0, '2017-09-08 09:34:00', '2017-09-08 09:34:00', '2018-09-08 11:34:00'),
+('5053fd2244a05346718a3893cde1dc8acef0965373c8b19cf4b0fa58afb4f3510bb6d9c6297dadf4', 11, 2, NULL, '[]', 0, '2017-08-02 10:26:52', '2017-08-02 10:26:52', '2018-08-02 12:26:52'),
+('50ab81f80b953980ac3e3fd8b705464d7048df81fc8196dfeb363147b071d47fdf662937481a9e39', 52, 2, NULL, '[]', 0, '2017-08-21 07:56:24', '2017-08-21 07:56:24', '2018-08-21 09:56:24'),
+('53ed88f49ed68262b02712d11f20e1e788551bb71f5cb98c17028146c630cdaa389e1b3a5461a251', 52, 2, NULL, '[]', 0, '2017-08-27 11:47:51', '2017-08-27 11:47:51', '2018-08-27 13:47:51'),
+('53f89f08dd6156c8c79b562837b9bd041f12be7264657a911a138c72b0bee982ab81d50a2851e633', 58, 2, NULL, '[]', 0, '2017-12-01 12:56:26', '2017-12-01 12:56:26', '2018-12-01 13:56:26'),
+('5434548bbd2a2ce4657efcf7ca122037a21be63da01fba408023f2d1975e4eb0c19a22909ae2b86a', 11, 2, NULL, '[]', 0, '2017-07-11 20:18:17', '2017-07-11 20:18:17', '2018-07-11 22:18:17'),
+('5610249d81fffdcf8857bc37f4a8d73ae8be78bedf3eb0396072b5f8cb076f69b5297747d3c84fdf', 11, 2, NULL, '[]', 0, '2017-07-08 09:33:07', '2017-07-08 09:33:07', '2018-07-08 11:33:07'),
+('5adbc3c4861e92ad98072d86917465018d8e4f90cfade959b919b5f802dbc3d57dac2e1996070645', 58, 2, NULL, '[]', 0, '2017-12-12 12:56:19', '2017-12-12 12:56:19', '2018-12-12 13:56:19'),
+('5f770586d73f31b99bed106f030a63527d0b6007eb37624ccc9c1b32ebd143106c45c6315c5d85df', 52, 2, NULL, '[]', 0, '2017-08-21 07:54:44', '2017-08-21 07:54:44', '2018-08-21 09:54:44'),
+('62ec4b25eda79069b0eed95a5b89436dd1a3a345829f804a5672de4399123e6fe09d114dd240b708', 51, 2, NULL, '[]', 0, '2017-08-06 12:38:54', '2017-08-06 12:38:54', '2018-08-06 14:38:54'),
+('69b4009d20826760f9dbadb6c37f18e0468ee600aac2800dd30d119a732b755a58bdb00254658f59', 59, 2, NULL, '[]', 0, '2017-12-12 13:39:00', '2017-12-12 13:39:00', '2018-12-12 14:39:00'),
+('6bc0283aaf997ea0b6939c25082dff076f6a831d60c8d8eef42a22430d03e8c6a5ccf934cd22080a', 13, 2, NULL, '[]', 0, '2017-07-27 10:13:21', '2017-07-27 10:13:21', '2018-07-27 12:13:21'),
+('70debe76a8d53de685a549b1738d8db9418a3ca05c55bc6e7e6fb407d858369e2de8334b19e837b5', 11, 2, NULL, '[]', 0, '2017-07-13 08:34:27', '2017-07-13 08:34:27', '2018-07-13 10:34:27'),
+('762ee0069e175b120ea3ce119a0e3d7e02793c41c615c6e49c0337d37853196ef60935cadc2c447c', 11, 2, NULL, '[]', 0, '2017-07-27 09:12:42', '2017-07-27 09:12:42', '2018-07-27 11:12:42'),
+('7d94c9835e249c1dd99cdcc41c775124ec058d9613a78b6ec6b826a99469242cdd9d5ba3aec9201a', 57, 2, NULL, '[]', 0, '2017-11-28 12:42:24', '2017-11-28 12:42:24', '2018-11-28 13:42:24'),
+('7e3e478f19354d3d917ced09ef633fe091b0b8459bfff8ddf0f0195f339b30c1c95e4b174ccd83f8', 58, 2, NULL, '[]', 0, '2017-12-04 12:52:36', '2017-12-04 12:52:36', '2018-12-04 13:52:36'),
+('7fed472be2b7a5196f48fc57f39f8e57927c27b3410a34ad6213f73e178cc5c7c641089f99455a43', 54, 2, NULL, '[]', 0, '2017-10-26 08:37:26', '2017-10-26 08:37:26', '2018-10-26 10:37:26'),
+('803198a5a5f16fef24a6b3f00303ffa0d68cd8c96ccf3b4a25f449c3a1e27cfdcfef6d47a9c582ad', 12, 2, NULL, '[]', 0, '2017-07-13 08:33:47', '2017-07-13 08:33:47', '2018-07-13 10:33:47'),
+('887ebf773a77926177dd338b5e0db50f2324fc6caa09947ad1279b417b410069f27d442207b88faa', 52, 2, NULL, '[]', 0, '2017-08-27 11:45:31', '2017-08-27 11:45:31', '2018-08-27 13:45:31'),
+('89389eba5933a6d1ea2610aa3f64f23d49acc5f88db25ebba8097338c59b502a6072ab90d5bed544', 58, 2, NULL, '[]', 0, '2017-12-13 23:15:25', '2017-12-13 23:15:25', '2017-12-16 00:15:25'),
+('8d6dcc7d849f6a8de76b57318f7a17c55e23d7c1da6799be8221c03292241f97cdae272eb18be7f3', 11, 2, NULL, '[]', 0, '2017-07-13 10:09:00', '2017-07-13 10:09:00', '2018-07-13 12:09:00'),
+('8e3029341d3f6f1ba9f4ac8be02c30fd96e58cb68c6eebdb3ed675815cf3ea822196d9776876a2f3', 12, 2, NULL, '[]', 0, '2017-07-12 09:04:26', '2017-07-12 09:04:26', '2018-07-12 11:04:26'),
+('9417d13f92f075318585615a064260f6df51699f5577d4e44f9cfd6446fea7df9b4e16e9f7a77aad', 58, 2, NULL, '[]', 0, '2017-12-11 04:10:05', '2017-12-11 04:10:05', '2018-12-11 05:10:05'),
+('954521275c3053bca5e417b0960aa68d6a9d37dbaca01a5b0e7f79dc3bd9c503f1305818bde10b66', 11, 2, NULL, '[]', 0, '2017-07-11 17:52:52', '2017-07-11 17:52:52', '2018-07-11 19:52:52'),
+('9cf5f237ac93262eb2fa324269b6842bc2c9064e2a9a270c9519ba686e179bcd3c18f2f15c05d042', 11, 2, NULL, '[]', 0, '2017-07-12 07:20:37', '2017-07-12 07:20:37', '2018-07-12 09:20:37'),
+('a54b5d3f70664a06175abc67335a791024d6a8b81243bb429d874bdf5358232fedb91c62d4f225b6', 11, 2, NULL, '[]', 0, '2017-07-11 20:12:28', '2017-07-11 20:12:28', '2018-07-11 22:12:28'),
+('ae4b5d51ffe7fb97b0e6a31fe9980b6a263bf417020ffc3a3a171822544bfe591053ce050ed5b03f', 55, 2, NULL, '[]', 0, '2017-11-06 12:54:30', '2017-11-06 12:54:30', '2018-11-06 13:54:30'),
+('aec0373a14f5bf7d162395135e2e470e4d71cca610714842b60523c8f521b26425fef82e66925ed1', 53, 2, NULL, '[]', 0, '2017-08-07 11:46:07', '2017-08-07 11:46:07', '2018-08-07 13:46:07'),
+('b36a55e2369fa36266a44c62844224ee7e750d2f3eea8a03a7386724de8c26dd9605ccbe830bb5e8', 52, 2, NULL, '[]', 0, '2017-08-07 11:44:54', '2017-08-07 11:44:54', '2018-08-07 13:44:54'),
+('b3f3d5314eab4039fab57ba96ea61a1cb3a180ba95feb59855fb65142f13031055a0e349c14072b3', 11, 2, NULL, '[]', 0, '2017-07-11 15:36:18', '2017-07-11 15:36:18', '2018-07-11 17:36:18'),
+('b6fd9e9652a98b252e649a93a077b5355b89116850bba735c545d7fba21cf94271b86d678c1c4a01', 11, 2, NULL, '[]', 0, '2017-07-14 05:42:19', '2017-07-14 05:42:19', '2018-07-14 07:42:19'),
+('b700cea844408f53346363918037dcc6c75814568a6e226a3067c2999d58ab9ee53410c73af11d83', 60, 2, NULL, '[]', 0, '2017-12-12 13:40:12', '2017-12-12 13:40:12', '2018-12-12 14:40:12'),
+('bc73e023c6943c6aba8a046795d7e37da91ab94c58b6003695255cfaf69e637c31b5255bc90e4531', 55, 2, NULL, '[]', 0, '2017-12-04 01:42:31', '2017-12-04 01:42:31', '2018-12-04 02:42:31'),
+('bd9ebbd16b9c76c31b5d6cbf8bc2a1935b789f122b698d6305b97450b5dc9b56a19f45e89815853a', 55, 2, NULL, '[]', 0, '2017-12-04 01:44:54', '2017-12-04 01:44:54', '2018-12-04 02:44:54'),
+('be8a983486ca0f5d09f210b57ff5b98db6f44ca10fb8812c82f901030700f64eda9eaca5464e8bd9', 52, 2, NULL, '[]', 0, '2017-08-08 10:28:14', '2017-08-08 10:28:14', '2018-08-08 12:28:14'),
+('c015d7b6484eeaf36b1bda2af711f87486bafb10dcda0ce50e2c0f38965059eea1b1e19da00fff79', 58, 2, NULL, '[]', 0, '2017-12-04 01:42:14', '2017-12-04 01:42:14', '2018-12-04 02:42:14'),
+('c1db597d427c30730f30521bd559d161fe3c6e4e2b7e281ab6603aeca1c2b998d68384b3323750fa', 55, 2, NULL, '[]', 0, '2017-12-12 13:02:41', '2017-12-12 13:02:41', '2018-12-12 14:02:41'),
+('c8afeb0870f61f6972f01b5c3ac006d30123199b13ba1b9bd5701890cdc2905d2f7a4842c29f72c9', 11, 2, NULL, '[]', 0, '2017-07-12 06:23:59', '2017-07-12 06:23:59', '2018-07-12 08:23:59'),
+('cd744c6a8a883439e5127d07b9dee03448e5b8946c6878a5d22fb1fa4ede42a9557de89f9acf73c7', 11, 2, NULL, '[]', 0, '2017-08-03 07:51:34', '2017-08-03 07:51:34', '2018-08-03 09:51:34'),
+('d660e4b4b11a0b986cbb02accbbb0cf9d56d5dbc5344827711e1b4070c5fe1322322b8c75a566b00', 11, 2, NULL, '[]', 0, '2017-07-12 19:50:06', '2017-07-12 19:50:06', '2018-07-12 21:50:06'),
+('d923b0be36b1ab4b15fb23b941048b7504e42e1dcaccd1f2ebc1285e9bc6b86ff4ca7624c8f0813a', 55, 2, NULL, '[]', 0, '2017-12-12 13:23:24', '2017-12-12 13:23:24', '2018-12-12 14:23:24'),
+('dc91888731130152167cd7f6c1f17e06174900af4a992ee6786ccb0ed758c1eebe1b8cd421c7975f', 52, 2, NULL, '[]', 0, '2017-10-26 08:08:47', '2017-10-26 08:08:47', '2018-10-26 10:08:47'),
+('e009f0162737a121002be27db71eb3c4b80d135c710534073e585e47d21ca719bb9b7b90fe9ce201', 58, 2, NULL, '[]', 0, '2017-12-04 01:44:21', '2017-12-04 01:44:21', '2018-12-04 02:44:21'),
+('eedbb0485002548bb069bfe0088064581f20fc84d5069e5ae55796c886ce98022a478065ee4cd549', 1, 2, NULL, '[]', 0, '2017-12-15 01:09:07', '2017-12-15 01:09:07', '2017-12-17 02:09:06'),
+('f352e8eefcbfde6793b2e1af9c1279ad512cc55b10981ec67d14805ff7dfde0b9abcc640255d44d5', 52, 2, NULL, '[]', 0, '2017-08-08 10:16:56', '2017-08-08 10:16:56', '2018-08-08 12:16:56'),
+('f56911003e7d6356b69a4127a4c11746b13da02f839b9346569573cc690c710919731b133d53e3f5', 53, 2, NULL, '[]', 0, '2017-08-16 08:22:26', '2017-08-16 08:22:26', '2018-08-16 10:22:26'),
+('f7375e4477228ac17a16255055b515b503e735ab67e8190b95041523e0508b44596a83cdda6c1dc7', 55, 2, NULL, '[]', 0, '2017-11-28 11:26:12', '2017-11-28 11:26:12', '2018-11-28 12:26:12'),
+('faf585d771354b43bdb460f14760464d640a98e7de6586e86fea82729ef596d068abc3d37b521e65', 55, 2, NULL, '[]', 0, '2017-11-29 21:14:25', '2017-11-29 21:14:25', '2018-11-29 22:14:24'),
+('fbc504479b5aab96e7dc73cc355f199e366c3f34695283917dadeb8d744bac56848a473229d0bc94', 52, 2, NULL, '[]', 0, '2017-08-27 11:41:26', '2017-08-27 11:41:26', '2018-08-27 13:41:26'),
+('fe94a9280a8a70c695bb13e0a31024f131b31cba1f27f391f0f88709b111109cd07031b69244298f', 11, 2, NULL, '[]', 0, '2017-07-27 09:11:57', '2017-07-27 09:11:57', '2018-07-27 11:11:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_auth_codes`
+--
+
+CREATE TABLE `oauth_auth_codes` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_clients`
+--
+
+CREATE TABLE `oauth_clients` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `secret` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `redirect` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `personal_access_client` tinyint(1) NOT NULL,
+  `password_client` tinyint(1) NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `oauth_clients`
+--
+
+INSERT INTO `oauth_clients` (`id`, `user_id`, `name`, `secret`, `redirect`, `personal_access_client`, `password_client`, `revoked`, `created_at`, `updated_at`) VALUES
+(1, NULL, 'Laravel Personal Access Client', 'ZSxLLmatyiI5bhzuHLXIDVJczdBkBqMpRaYXyBhS', 'http://localhost', 1, 0, 0, '2017-07-08 08:30:50', '2017-07-08 08:30:50'),
+(2, NULL, 'Laravel Password Grant Client', 'P1QH5Ealfi7hsjzy3inuUoeO4vOU6DSOPzJbhAsK', 'http://localhost', 0, 1, 0, '2017-07-08 08:30:51', '2017-07-08 08:30:51');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_personal_access_clients`
+--
+
+CREATE TABLE `oauth_personal_access_clients` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `oauth_personal_access_clients`
+--
+
+INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `updated_at`) VALUES
+(1, 1, '2017-07-08 08:30:51', '2017-07-08 08:30:51');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_refresh_tokens`
+--
+
+CREATE TABLE `oauth_refresh_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `oauth_refresh_tokens`
+--
+
+INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires_at`) VALUES
+('01ad0bfbaa3247f72ceeae6d6978830c9187beef4723761d0f14d01674d6f5666539b848483945e9', 'cd744c6a8a883439e5127d07b9dee03448e5b8946c6878a5d22fb1fa4ede42a9557de89f9acf73c7', 0, '2018-08-03 09:51:35'),
+('06dd514510e81a3fa1da11a722db2930e3b8e743a2cf2fa6177fa43bf6fc8cd6fc39a46599223aae', 'fbc504479b5aab96e7dc73cc355f199e366c3f34695283917dadeb8d744bac56848a473229d0bc94', 0, '2018-08-27 13:41:26'),
+('0f4716dfc637a35678fb563a738ecf9e069bd1b74e3bd97a49bbf50c780a283868970fb55f5af430', '058529d01722813bc57a7fd5ad5ecba940fa1eb87ec8ef2da9a61a842526b6c6b8b8fcc548421539', 0, '2018-07-13 17:11:30'),
+('106343d5d67e92b98ffddb44d70843d48aec112cf5a9de215df70a75317da36bc1c23bf3ecea73ef', 'bc73e023c6943c6aba8a046795d7e37da91ab94c58b6003695255cfaf69e637c31b5255bc90e4531', 0, '2018-12-04 02:42:31'),
+('14c9bc373a76b68e43141f789ebd9395ab091534d761b800eb6c4ec553d0d90bb28b2e1beffef98a', '8d6dcc7d849f6a8de76b57318f7a17c55e23d7c1da6799be8221c03292241f97cdae272eb18be7f3', 0, '2018-07-13 12:09:00'),
+('158316c4b54c9d77efb4e78483495cbeeb16ea21f56fab15a19ce362324ce3cb68ca5b532b61da2d', '2cd5927a0fd775cf6e1193d34551d0e2b8900ace267a7c7279517265417ce224dd2e0f9a29c33eac', 0, '2018-08-28 13:31:37'),
+('19683054e362bede695577b9acec415391ce095e0cd200e4bd6cd2cca56525fac32649aa09d1272f', '5f770586d73f31b99bed106f030a63527d0b6007eb37624ccc9c1b32ebd143106c45c6315c5d85df', 0, '2018-08-21 09:54:45'),
+('1e427a934bb1b0a742e1b944a1be98450ee774f1057a06ea1192c0362afbc4092af1fbbd280415b8', 'b6fd9e9652a98b252e649a93a077b5355b89116850bba735c545d7fba21cf94271b86d678c1c4a01', 0, '2018-07-14 07:42:19'),
+('1ecddbba7aa2f64067c9bf06cc491a5fe4f0fb14f6f4f862c90a6a1bd13a4d193d3970ca54326a73', 'b36a55e2369fa36266a44c62844224ee7e750d2f3eea8a03a7386724de8c26dd9605ccbe830bb5e8', 0, '2018-08-07 13:44:54'),
+('1ff8d3ce0bd33b43e0d9641e5e32e722ab6cfceb59ecdd001509321e7fc789b31c83dcca0da2dc9e', '3d000b9a3a67037452f2dbf8eb6cd9323ff4d07d3269b68d43dd8fe2fe808fb68097ed3a140d1fc3', 0, '2017-12-17 02:13:05'),
+('20702c69b1a73ea1765568028b8ccbedfbeacc18b3a9f4566b6db1f15d7061ae6524e1fe10e6bd75', '2685ab77a9eaeaad929d87b8aac831418add2ca5f5f8dccce9365c6903ac702455e8145c5ce52e4a', 0, '2018-07-11 20:17:01'),
+('21ad368a06e4af077c140d631e9c9380b8417fd46d418048f8dc1ca963da692608850a88f20db795', '50ab81f80b953980ac3e3fd8b705464d7048df81fc8196dfeb363147b071d47fdf662937481a9e39', 0, '2018-08-21 09:56:24'),
+('25eb6b1c27138d32a5a9362b5ed007a9fa01a00db7a5c556141acb53048a9c0b0923fa1496934efa', '53f89f08dd6156c8c79b562837b9bd041f12be7264657a911a138c72b0bee982ab81d50a2851e633', 0, '2018-12-01 13:56:26'),
+('2a44147d525032475e0dead4cf7aa6b9235883cebc5883b30b0e606cc91eade346982edf71f8ecef', 'c8afeb0870f61f6972f01b5c3ac006d30123199b13ba1b9bd5701890cdc2905d2f7a4842c29f72c9', 0, '2018-07-12 08:23:59'),
+('374babccb0139fe7b6a41db6de1163c85578adbe60422b53a8f8de9816f05a06cfaedbae71dce460', 'd923b0be36b1ab4b15fb23b941048b7504e42e1dcaccd1f2ebc1285e9bc6b86ff4ca7624c8f0813a', 0, '2018-12-12 14:23:24'),
+('39bdce209331bb26b8d00185bcaf8a1a1d20b86939175a5eec9c424e45e03e0a69173c82c84370c4', '7e3e478f19354d3d917ced09ef633fe091b0b8459bfff8ddf0f0195f339b30c1c95e4b174ccd83f8', 0, '2018-12-04 13:52:36'),
+('3d597b990b1e38a314bce1e754330e856b04db48467790ec2056146247c415fbf731ba3d5c0bbb03', '280ced428893507d6dc6d19b666e7af40799acb1c525009c382c57534aefc5428720f49801c74e16', 0, '2018-11-06 13:43:34'),
+('4104df0bb00d3bcb737c4a9e11ebc8987df0212c7b2e31ec97d5ceb05d0d9e944039c1d8a089d7a6', 'f7375e4477228ac17a16255055b515b503e735ab67e8190b95041523e0508b44596a83cdda6c1dc7', 0, '2018-11-28 12:26:13'),
+('4848107062a2ea4f7605c7440012c7c35ff28217b4f62cbca89edd79715b76aefb676f9eb1ec7c0d', '32042f6144d39712c0246dde14070e30ec5d0e5653e7536fb9346b98132877e8311fbc7bf159a4ca', 0, '2018-10-26 11:24:02'),
+('4a5b8556bde5d9868f2e50ec39d0e84f9cb827426abfc55081a6f057811a5b10e8b114f34f9b4622', '887ebf773a77926177dd338b5e0db50f2324fc6caa09947ad1279b417b410069f27d442207b88faa', 0, '2018-08-27 13:45:31'),
+('4bb9483fd2bde257c2d1e73666dc46faee87161d333f7213b83ed2a011cd8f204372d972f0202917', 'bd9ebbd16b9c76c31b5d6cbf8bc2a1935b789f122b698d6305b97450b5dc9b56a19f45e89815853a', 0, '2018-12-04 02:44:54'),
+('546838be9e473cc00c5b9afe66d48b26d60eec885cfbe980c750c05bdad64b7ab9db08439cedb1ee', '4eb2784573e80619b1fc39530ecdafe5f96284858234d3be8e894c28ca158abfb221e3dfe4aee827', 0, '2018-09-08 11:34:01'),
+('5de86275972eba0efa56021a39ae5af1faa3e17cb0438b374eb65064d277cb76bc8ec941061992be', '2f8cf5e573ba25d816ec79941cdb4d69eeb9a07576dd71384b6ab4f2456a1f2a3504b544658c4398', 0, '2018-07-11 22:14:21'),
+('609797dbae322c65770ee5a6fefce186d2115559495e99c0ac7829107a1c56b2d88ee8950aeff0a8', '9cf5f237ac93262eb2fa324269b6842bc2c9064e2a9a270c9519ba686e179bcd3c18f2f15c05d042', 0, '2018-07-12 09:20:37'),
+('63d8e031752c9ade2dcf7367606532426d620d3933c8203f3d4ba682e7390ea4e05953a4ab76842f', 'c015d7b6484eeaf36b1bda2af711f87486bafb10dcda0ce50e2c0f38965059eea1b1e19da00fff79', 0, '2018-12-04 02:42:14'),
+('69abb7976fc7c72c309ee7558a43bcea159fb9ae8cda1a3d5cbd07a65f2006578067c93b4eb1d45d', 'eedbb0485002548bb069bfe0088064581f20fc84d5069e5ae55796c886ce98022a478065ee4cd549', 0, '2017-12-19 02:09:06'),
+('6b3d8458cd645f980c123e3ffcb198b70c928906c12af622ab4c663aa06dabb7f84011ca71520457', '19ef79f8c93d0d5ba6eefd2580c63bfc8d58168f091cfa5eebb71dd210703f6a0410e81022c024d7', 0, '2018-08-14 13:01:59'),
+('6b943150378892336800cf8b5edd26c38067487d84b6c8009695b84b3409c85f733ac3fad0ce7518', '443d0cc0dace629d3b2fe9f1fd2e5c1de5df41eaa7cfb6e1cfe33777b62275a443cda62c530c909d', 0, '2018-08-07 10:44:28'),
+('6ed26d91cfa0455f9948f63c11f4d9f9783fc9145cdfb5f7f8ff440cdc7685f13e2a398699a9b616', '0d39af1b174dc0c93b0c005e2ea54a4f0d1e9295bc575b29f10c37da23baa839051034fd5c0b2ae2', 0, '2018-08-08 12:29:09'),
+('7105206c7b8150a2076e7356043441480ff1a9a1fad1549c8fe63e7a4a3aaf568c92e9d392e19823', '140ed3e509ced2f723bb1ed8e0df8a236518f303d7b74535f064fd55fc83599bbe88e340b55ca906', 0, '2018-07-13 12:08:58'),
+('715d8fc5246dcba270e9793fc46a1377f8b0871dee5a1ac281560e82e2fd450729ed7bc04dbe3e1b', '803198a5a5f16fef24a6b3f00303ffa0d68cd8c96ccf3b4a25f449c3a1e27cfdcfef6d47a9c582ad', 0, '2018-07-13 10:33:47'),
+('728494a13ee0a6789e340f527d817ddb0bdce4abfa60d2619d9edb81483431f80b4d9dd966b68285', '8e3029341d3f6f1ba9f4ac8be02c30fd96e58cb68c6eebdb3ed675815cf3ea822196d9776876a2f3', 0, '2018-07-12 11:04:26'),
+('784da68fc3d364a431e51762bafbef429deb31617d35c9faaa263158e276a0cc7f32c97236df1c2a', '69b4009d20826760f9dbadb6c37f18e0468ee600aac2800dd30d119a732b755a58bdb00254658f59', 0, '2018-12-12 14:39:00'),
+('79d33a3709fe5b28d5ac174e87d876f60e0a334ca0d8ae7d3bfb2ffbd10475597dc7d03b9cb6d01b', 'dc91888731130152167cd7f6c1f17e06174900af4a992ee6786ccb0ed758c1eebe1b8cd421c7975f', 0, '2018-10-26 10:08:48'),
+('7afe193fbb4aa2762b89714843f267d4aebfdfc290ae4c5dc651eb477f7d8391d22b31221b7db984', 'c1db597d427c30730f30521bd559d161fe3c6e4e2b7e281ab6603aeca1c2b998d68384b3323750fa', 0, '2018-12-12 14:02:41'),
+('7b6638653536636ec7e8189c5145750cf0d6ea0242fd6bab4e5f8e49bf37a47380b037125459216f', '4782f451e17b119fad2c8399ddb29fbf3fe04aeb43bdce4f5b7c111b0cb4043dff66360a5b354a49', 0, '2018-08-27 13:48:00'),
+('7bfb65ef1077340e0388ecaeab445d2c9e1f7c05d2709f946c1e31bdb2044c50c6e51f099c4ba0cb', '0bd257a6de65f6459d6aba550ef49da95ae79f38f475b02654a1035d53de4322828ff25e89711e3a', 0, '2018-11-06 13:34:29'),
+('81298ef4f0ca3d9392d9bab0b050322e6c7aabf4e9a4e9cd2618c0e4c3e215b764acf9009945e699', '89389eba5933a6d1ea2610aa3f64f23d49acc5f88db25ebba8097338c59b502a6072ab90d5bed544', 0, '2017-12-18 00:15:25'),
+('816fd85af1f244e6549256a11bbfba30eede5e9af0b574a137ef5f262986a17b797170a1ad8b334a', '62ec4b25eda79069b0eed95a5b89436dd1a3a345829f804a5672de4399123e6fe09d114dd240b708', 0, '2018-08-06 14:38:54'),
+('861c136bbfe66ef6976017fe65426c5750bcde291e3297f2c3079be75f4386aa8149a8064954c8a6', '6bc0283aaf997ea0b6939c25082dff076f6a831d60c8d8eef42a22430d03e8c6a5ccf934cd22080a', 0, '2018-07-27 12:13:21'),
+('8d94351b4c0211fb534466cc3d55b294c99b3c9f1230c54fdf26dc71a710733039192bf080b7d5a4', '9417d13f92f075318585615a064260f6df51699f5577d4e44f9cfd6446fea7df9b4e16e9f7a77aad', 0, '2018-12-11 05:10:06'),
+('8ed2f55ffb7dd9f268201f2eb88ec1106b280c9af3499276688733510b0a45e9f2552b4de3dfafaa', '1cf9216995597027fac969f0e442dce77674c2858898eaeebc5b04e801c630a97dfdaffb5a68b32a', 0, '2018-07-11 17:32:51'),
+('8f6a4a4b162de609410765f1260ae38c211469559abab8364248404f0c52cd44d0dbb279cb3f7af8', '5434548bbd2a2ce4657efcf7ca122037a21be63da01fba408023f2d1975e4eb0c19a22909ae2b86a', 0, '2018-07-11 22:18:17'),
+('93caf4cf136cae4dddefe3f657cb77d8327303e61a78dfd5210ba5e3face5175b56984cac8261a57', 'f56911003e7d6356b69a4127a4c11746b13da02f839b9346569573cc690c710919731b133d53e3f5', 0, '2018-08-16 10:22:26'),
+('94518542b6a4fef6f80f8ca75bc7f14b0485d9850d5fadf01d66392c74e90db655cf55f401ec242c', 'b3f3d5314eab4039fab57ba96ea61a1cb3a180ba95feb59855fb65142f13031055a0e349c14072b3', 0, '2018-07-11 17:36:18'),
+('94f2074ac887be0bec736fcc5cf21325c4ec9cc30abab29a8314a75712e6043a3dbfb38774f4b6c7', 'd660e4b4b11a0b986cbb02accbbb0cf9d56d5dbc5344827711e1b4070c5fe1322322b8c75a566b00', 0, '2018-07-12 21:50:06'),
+('9526a4c5f14cb1d55527da783d2cf3c2165553dd6fd0ac647ee82b39f3f9a8d6f08ebb6acaf096df', '37be78221910aba88ee5a0ce7e1373f448eb645e70cb3716bc89069eb6df146cd3c55eba07347a66', 0, '2018-07-11 22:11:33'),
+('97e191c22aaa52147f94b53346ae97b636d2dcfc9f1040c15564c6e63b971ab68d0b9e2a8ba94782', '2e198a9cff9fd40d5f6b4444b4157d9ee413548b9cc1392f1405771421b894cbbbf92c0180c44ad3', 0, '2018-07-11 22:15:43'),
+('9bb6ac7fa3e296dadad183f249d5501670bd1a5a023ee561203d04b3336702d8e6668c7fb7f5a43f', '381405939231d6f563d7bf7227dd7ffb8ffb6cc841838f98e279655e18eb51f5732ba76f7365d173', 0, '2018-12-11 05:12:20'),
+('9ccfa3461d9b6a716352a1c39faaccf18e2ec4e99a6f61392e5c63ce99d1773ffdceef5f08e84389', '0ae3a6ae81c1d2b115fca51ab68915700dc1c35b924bd3fe26149ab8d99bae98d2842a97c870704d', 0, '2018-09-14 11:35:54'),
+('9d0f49173230fa6737705fff00af54cfdcfe5ab0ad77ae6ba14a6e89384edd60a4357854701eb65a', '4069b6ac707d5ea621a7283455d6452930228b4839bbe792916bbee48eb44a972ebca1d0b6c1ad1f', 0, '2018-08-08 12:17:48'),
+('9d57cbc27f19880c7ee538e166163f6f195e6773176c1dbd75e3bfced85c2e56228258fb387f2e60', '25ef89f2fc787a53c2456d7cb96676cad12417b5f224758f60438d491fe557e042e9ca128eaf5001', 0, '2018-07-27 12:04:29'),
+('9d9dadb60e8d09cff3ec7c9ad852b864c93d9ea91d5ec15e5890651183e493179fd06667bac30051', '3ba420fb1805ce47dac0ac97ec26bf202118af91db266e4100a2ad4a25104b280be9013e5ab7df6d', 0, '2018-09-12 10:16:52'),
+('a64e34b998b55410f334ee5b647ea038a85e876cd72ac266c0a1cf69a0c2f524f399ac69cf7c7e9f', '5053fd2244a05346718a3893cde1dc8acef0965373c8b19cf4b0fa58afb4f3510bb6d9c6297dadf4', 0, '2018-08-02 12:26:52'),
+('aa81e5adf2725798fca7b7ce9ecd1b12a90c9f092a429c6495cdc207c99199a30a43db793dc85208', '376dd117ec9e254c10c0e39da6c374d962f00b9d8c1e2a92a5cbeecd2292297d9e67a1f93753664f', 0, '2018-07-11 22:19:20'),
+('aace1a8182dc1c4b52288c097498c0d2d63dd16c5f9904eb222e1373d5b819d98249a801aab3d48f', '7d94c9835e249c1dd99cdcc41c775124ec058d9613a78b6ec6b826a99469242cdd9d5ba3aec9201a', 0, '2018-11-28 13:42:24'),
+('b89226087666c53ae8427744e3f841a09dacea94c223644c2833375d8410eeb36a976d687c7f8570', '0facc77aa4822fee4a5e445a6cf1c8c47291fa16516240fa712b0273a6039049155f56f0680aa38d', 0, '2018-08-08 11:53:18'),
+('bafe3815a808eada789c927d6be8682540859d957502bcd38ababe7786f0873eac1b25b0182f9e81', '7fed472be2b7a5196f48fc57f39f8e57927c27b3410a34ad6213f73e178cc5c7c641089f99455a43', 0, '2018-10-26 10:37:26'),
+('bbc66b0d1c75f19cc7b30688110e0eb81006efeb8fc9308a059c90fac0146efe634edb4ec75269cf', '3f81dfe1693459c68bd4c72267d2f1a76eabd9a5cd575cf174227fc18f32d2c8c07899e9ba894612', 0, '2018-09-14 13:44:21'),
+('beb485c01961ce1ead3789a991a77722c359716137f7e3e457f0e41b70fffd400664f91f6ec40391', '093b27845f13dd97b0a41e825f86d60bb94566f57574b415400070ac94b067a82c60ddb45696d29b', 0, '2018-07-11 20:16:34'),
+('c43dd80beb9f8d5a24412a80687ec2a48707a8bb86f72f838854155b6ae42864fc75f4aeb7a48e00', '3eccb719da63df0335a526d8968596b5ccb33da738c429661cbaff84ff70c75ebb4c61d417e0dcb3', 0, '2018-08-14 13:11:58'),
+('c5bca4e49fe8f9b989370ece47cef7fff548d954917dba3db86e79f8a3867810b431d75c40c8a09f', 'f352e8eefcbfde6793b2e1af9c1279ad512cc55b10981ec67d14805ff7dfde0b9abcc640255d44d5', 0, '2018-08-08 12:16:57'),
+('c6c9178cee04e442af4bee0e307a39b6c17132cdc1459c8444ad4b881f6700de84dbcde582fcdd22', 'aec0373a14f5bf7d162395135e2e470e4d71cca610714842b60523c8f521b26425fef82e66925ed1', 0, '2018-08-07 13:46:07'),
+('c7ca5211bfeeceefbb3031e9bbb276d8e056e8fe3aac1bd6829946860af5fea7cdfc03c413c5d97f', 'a54b5d3f70664a06175abc67335a791024d6a8b81243bb429d874bdf5358232fedb91c62d4f225b6', 0, '2018-07-11 22:12:28'),
+('c9bb69ef25af83ff912c0e59a0f3fa7e39954dbb2352dbdedac74c937c94bcc205126736b34d1fef', '954521275c3053bca5e417b0960aa68d6a9d37dbaca01a5b0e7f79dc3bd9c503f1305818bde10b66', 0, '2018-07-11 19:52:52'),
+('ccc777935236f3d70ae6e56a6b8c73276c6bb474c1ae00df75d0ec3369408d116d04ccf784aa00b3', 'e009f0162737a121002be27db71eb3c4b80d135c710534073e585e47d21ca719bb9b7b90fe9ce201', 0, '2018-12-04 02:44:21'),
+('ced2c8e0d2268e02f1d5fa6edd940184b106c880bb8669f5994b737bb3ed00d53aa4b34157686ed7', '3a69a2f95a506bf692fd192f2e2d72271d111f7d52ba44d8a75d68709202dfb6102831e4d5e8e372', 0, '2018-07-27 11:12:01'),
+('cf16f0191fdce7fcdba96e893e330088f5393ff2140a69039b049bdfae437de33fa7f8135070cbea', 'fe94a9280a8a70c695bb13e0a31024f131b31cba1f27f391f0f88709b111109cd07031b69244298f', 0, '2018-07-27 11:11:57'),
+('dee046392001ec52e921133107e5b5cdb3739cab3a112a90d29bcf3516c07d95b7cdafb152fa762c', '70debe76a8d53de685a549b1738d8db9418a3ca05c55bc6e7e6fb407d858369e2de8334b19e837b5', 0, '2018-07-13 10:34:27'),
+('e5346aa42c24a17d2c95fb9ae08061d9f560afbb6d6dac518653b09f90f388a7bfd87ee50d747be8', '53ed88f49ed68262b02712d11f20e1e788551bb71f5cb98c17028146c630cdaa389e1b3a5461a251', 0, '2018-08-27 13:47:51'),
+('e7310bfb46e3da73e4d52da74cddd5dfac5d4d39c35702028f89cee515204d1d7b385899f39931eb', '0af66e796a94efa61de3cbd8c9ad4ba3f25f3a4eea3d7b46e1082d954ffe3e09333489fd346a9467', 0, '2018-08-27 13:45:06'),
+('e7fa444557580a964975c1fcd0eedadc0d62039243846470b97ce255de62a19881d85915e8e4b95b', '5adbc3c4861e92ad98072d86917465018d8e4f90cfade959b919b5f802dbc3d57dac2e1996070645', 0, '2018-12-12 13:56:19'),
+('e9e29745027f333f846924827b7b2801c9a2c9e32ac8c725b1f035dc136d46650e1254bcc48a5ce5', '47bd85bdf2211e29829070cc910db58ec187ba519be29187dc2d82600245223c658dde79fc8acf1b', 0, '2018-12-07 13:43:00'),
+('ed36ee2b36ddd012727fe4fcd20d87c7da868cfefde41b2360d1e14d728a677707ec30f1fcbf6f4f', '762ee0069e175b120ea3ce119a0e3d7e02793c41c615c6e49c0337d37853196ef60935cadc2c447c', 0, '2018-07-27 11:12:42'),
+('eeb44f0c8233bb45158d4b781fcaccb9546372bfc57f50181462b77f8cca9b36d871f97fef261e36', '169bf97633b5f5c4f254d0189d251a4401331e84c9c9848140129cfab958571c81295a7959869859', 0, '2018-08-27 13:48:46'),
+('f3958898b67686701d4e5acb6e5f31aa409d9e148ac99c1ec6afa04b19dde923b0e0df4860fdb50c', 'ae4b5d51ffe7fb97b0e6a31fe9980b6a263bf417020ffc3a3a171822544bfe591053ce050ed5b03f', 0, '2018-11-06 13:54:31'),
+('f4e69f91e7dc489480f56714ba94494362a4e3593a3d164bbdba3fa837818fde69e0a81242940088', '5610249d81fffdcf8857bc37f4a8d73ae8be78bedf3eb0396072b5f8cb076f69b5297747d3c84fdf', 0, '2018-07-08 11:33:07'),
+('fad11fc1eb2f9d7cb7a1b048ead9c45fa6cff2c269e34e31760cf67cc3ce67ee25d7d8bc641d04c3', 'be8a983486ca0f5d09f210b57ff5b98db6f44ca10fb8812c82f901030700f64eda9eaca5464e8bd9', 0, '2018-08-08 12:28:14'),
+('ff59d29c4952257751d893788a774af5bdd1360342f1345e975a4212402235c20b84b0db6ad8ad63', 'b700cea844408f53346363918037dcc6c75814568a6e226a3067c2999d58ab9ee53410c73af11d83', 0, '2018-12-12 14:40:12'),
+('ffca235e359e03c57c9b154aa2c8be47a4a66495932a6cec24ede81ef09d061e5d0c29be25864b14', 'faf585d771354b43bdb460f14760464d640a98e7de6586e86fea82729ef596d068abc3d37b521e65', 0, '2018-11-29 22:14:25');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'employee', '2017-08-06 22:00:00', '2017-08-06 22:00:00'),
+(2, 'employer', '2017-08-06 22:00:00', '2017-08-06 22:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `role_id` int(10) UNSIGNED NOT NULL,
+  `propic_status` tinyint(1) NOT NULL,
+  `gender` int(2) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `role_id`, `propic_status`, `gender`) VALUES
+(1, 'Saroj Adhikari', 'sarojadhikarix@gmail.com', '$2y$10$GL2KsruxnmNDbDMejnJLeOO.S/BBQ5FPUeiLOxY6lOSzt3381mbDu', NULL, '2017-12-15 01:09:03', '2017-12-15 01:09:03', 1, 0, 1);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cv`
+--
+ALTER TABLE `cv`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `email`
+--
+ALTER TABLE `email`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `gender`
+--
+ALTER TABLE `gender`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `jobs_user_id_foreign` (`user_id`),
+  ADD KEY `jobs_category_foreign` (`category_id`);
+
+--
+-- Indexes for table `job_status`
+--
+ALTER TABLE `job_status`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `job_status_job_id_foreign` (`job_id`),
+  ADD KEY `job_status_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `oauth_access_tokens`
+--
+ALTER TABLE `oauth_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_access_tokens_user_id_index` (`user_id`);
+
+--
+-- Indexes for table `oauth_auth_codes`
+--
+ALTER TABLE `oauth_auth_codes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `oauth_clients`
+--
+ALTER TABLE `oauth_clients`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_clients_user_id_index` (`user_id`);
+
+--
+-- Indexes for table `oauth_personal_access_clients`
+--
+ALTER TABLE `oauth_personal_access_clients`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_personal_access_clients_client_id_index` (`client_id`);
+
+--
+-- Indexes for table `oauth_refresh_tokens`
+--
+ALTER TABLE `oauth_refresh_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_refresh_tokens_access_token_id_index` (`access_token_id`);
+
+--
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`),
+  ADD KEY `users_role_id_foreign` (`role_id`),
+  ADD KEY `users_gender_foreign` (`gender`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `cv`
+--
+ALTER TABLE `cv`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `email`
+--
+ALTER TABLE `email`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `gender`
+--
+ALTER TABLE `gender`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `jobs`
+--
+ALTER TABLE `jobs`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `job_status`
+--
+ALTER TABLE `job_status`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+--
+-- AUTO_INCREMENT for table `oauth_clients`
+--
+ALTER TABLE `oauth_clients`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `oauth_personal_access_clients`
+--
+ALTER TABLE `oauth_personal_access_clients`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `cv`
+--
+ALTER TABLE `cv`
+  ADD CONSTRAINT `cv_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD CONSTRAINT `jobs_category_foreign` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
+  ADD CONSTRAINT `jobs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `job_status`
+--
+ALTER TABLE `job_status`
+  ADD CONSTRAINT `job_status_job_id_foreign` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`id`),
+  ADD CONSTRAINT `job_status_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_gender_foreign` FOREIGN KEY (`gender`) REFERENCES `gender` (`id`),
+  ADD CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
