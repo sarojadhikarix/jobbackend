@@ -63,7 +63,6 @@ class ForgotPasswordController extends Controller
                 return response()->json($returnData, 422); 
             }
             $returnData = array(
-                'token' => $token,
                 'status' => true
             );
             return response()->json($returnData, 200);

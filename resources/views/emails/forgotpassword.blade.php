@@ -1,6 +1,6 @@
 <html>
 <head>
-<title></title>
+<title>Forgot Password</title>
 </head>
 <body>
 <strong>This mail is from jobs in Nepal. <a href="http://job.hopnep.com">job.hopnep.com</a></strong>
