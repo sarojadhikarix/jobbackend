@@ -28,7 +28,7 @@ class CreateJobsTable extends Migration
             $table->string('keywords')->nullable();
             $table->string('type');
             $table->string('requirements')->nullable();
-            $table->integer('user_id')->unsigned();;
+            $table->integer('user_id')->unsigned();
             $table->dateTime('updated_at');
             $table->dateTime('created_at')->nullable();
             $table->dateTime('finish');
