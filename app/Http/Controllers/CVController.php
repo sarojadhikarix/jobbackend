@@ -48,7 +48,7 @@ class CVController extends Controller
 
         try{
             $path = $request->file('cv_file')->storeAs(
-            'public/cv', $filename
+            'public/storage/cv', $filename
             );
         } catch (\PDOException $e){
             $returnData = array(
@@ -67,7 +67,7 @@ class CVController extends Controller
     }
 
     public function deletefile($id){
-        $filename = 'public/cv/' . $id . '_cv.pdf';
+        $filename = 'public/storage/cv/' . $id . '_cv.pdf';
         
         try{
             Storage::delete($filename);

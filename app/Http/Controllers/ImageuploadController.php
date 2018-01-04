@@ -77,7 +77,7 @@ class ImageuploadController extends Controller
 	      	//'public/propic', $filename
 	       //);;
 	   		//Storage::move(imagepng($newImage), 'public/propic/'.$filename);
-	   		$save = storage_path('app/public/propic/').$filename.'.png';
+	   		$save = storage_path('app/public/storage/propic/').$filename.'.png';
 	   		imagepng($newImage, $save );
 	        } catch (\PDOException $e){
 	            $returnData = array(
@@ -109,7 +109,7 @@ class ImageuploadController extends Controller
 
 
     public function delete($id){
-        $filename = 'public/propic/' . $id . '_propic.pdf';
+        $filename = 'public/storage/propic/' . $id . '_propic.pdf';
         
         try{
             Storage::delete($filename);
