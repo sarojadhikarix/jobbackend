@@ -77,7 +77,7 @@ class ImageuploadController extends Controller
 	      	//'public/propic', $filename
 	       //);;
 	   		//Storage::move(imagepng($newImage), 'public/propic/'.$filename);
-	   		$save = storage_path('app/public/storage/propic/').$filename.'.png';
+	   		$save = public_path('storage/propic/').$filename.'.png';
 	   		imagepng($newImage, $save );
 	        } catch (\PDOException $e){
 	            $returnData = array(
