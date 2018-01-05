@@ -29,6 +29,16 @@ class JobsController extends Controller
             ->toArray();
     }
 
+    public function allJobs()
+    {
+            $jobs = Jobs::whereDate('finish', '>=', Carbon::today()->toDateString())->orderBy('finish', 'asc')->get();
+            return fractal()
+            ->collection($jobs)
+            ->parseIncludes(['category'])
+            ->transformWith(new JobsTransformer)
+            ->toArray();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -78,7 +88,12 @@ class JobsController extends Controller
         $job->finish = $request->finish;
         $job->city = $request->city;
         $job->country = $request->country;
-        $job->status = 0;
+        if(isset($job->status)){
+            $job->status = $request->status;    
+        }else{
+            $job->status = 0;    
+        }
+        
 
         if(empty($request->company_website))
             $job->company_website = '';
