@@ -21,7 +21,7 @@ class JobsController extends Controller
      */
     public function index()
     {
-            $jobs = Jobs::whereDate('finish', '>=', Carbon::today()->toDateString())->orderBy('finish', 'asc')->where('status', '=', 1)->get();
+            $jobs = Jobs::whereDate('finish', '>=', Carbon::today()->toDateString())->orderBy('finish', 'asc')->where('status', '=', 1)->where('filled', '==', '1')->get();
             return fractal()
             ->collection($jobs)
             ->parseIncludes(['category'])
@@ -31,7 +31,7 @@ class JobsController extends Controller
 
     public function allJobs()
     {
-            $jobs = Jobs::whereDate('finish', '>=', Carbon::today()->toDateString())->orderBy('finish', 'asc')->get();
+            $jobs = Jobs::where('filled', '==', '1')->orderBy('finish', 'asc')->get();
             return fractal()
             ->collection($jobs)
             ->parseIncludes(['category'])
