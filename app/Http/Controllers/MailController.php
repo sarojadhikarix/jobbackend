@@ -19,17 +19,27 @@ class MailController extends Controller
 
         \Mail::to($toemail)->send(new message($data));
         if($byemail != '' && $toemail != '' && $message != '' && $name != ''){
-        	
+                    
+            $mail = new Mail;
+            $mail->name = $name;
+            $mail->toemail = $toemail;
+            $mail->byemail = $byemail;
+            $mail->message = $message;
+            $mail->created_at = Carbon::now();
+            $mail->updated_at = Carbon::now();
+            $mail->status = 1;
+                    
+            try{
+                $mail->save();      
+                \Mail::to($request->email)->send(new forgotpasswordmessage($token));
+            }catch(\PDOException $e){
+                $returnData = array(
+                    'error' => 'Mail send failed.'
+                );
+                    return response()->json($returnData);
+            }
 
-                    $mail = new Mail;
-                    $mail->name = $name;
-                    $mail->toemail = $toemail;
-                    $mail->byemail = $byemail;
-                    $mail->message = $message;
-                    $mail->created_at = Carbon::now();
-                    $mail->updated_at = Carbon::now();
-                    $mail->status = 1;
-                    $mail->save();
+
 
                 return response()->json([
                     'data' => [
@@ -41,7 +51,7 @@ class MailController extends Controller
         } else{
             return response()->json([
                 'data' => [
-                    'error' => 'Message not sent.']
+                    'error' => 'Please fill all the fields.']
                 ]);
         }
 
