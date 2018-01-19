@@ -17,7 +17,7 @@ class MailController extends Controller
         $byemail = $data->byemail;
         $message = $data->message;
 
-        \Mail::to($toemail)->send(new message($data));
+        
         if($byemail != '' && $toemail != '' && $message != '' && $name != ''){
                     
             $mail = new Mail;
@@ -31,7 +31,7 @@ class MailController extends Controller
                     
             try{
                 $mail->save();      
-                \Mail::to($request->email)->send(new forgotpasswordmessage($token));
+                \Mail::to($toemail)->send(new message($data));
             }catch(\PDOException $e){
                 $returnData = array(
                     'error' => 'Mail send failed.'
