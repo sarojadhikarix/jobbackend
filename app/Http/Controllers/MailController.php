@@ -43,7 +43,7 @@ class MailController extends Controller
 
                 return response()->json([
                     'data' => [
-                        'success' => $name . $toemail . $ byemail . $message]
+                        'success' => $name . $toemail . $byemail . $message]
                     ]);
 
 
