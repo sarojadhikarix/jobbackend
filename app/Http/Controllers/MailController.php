@@ -17,9 +17,9 @@ class MailController extends Controller
         $byemail = $data->byemail;
         $message = $data->message;
 
-
+        \Mail::to($toemail)->send(new message($data));
         if($byemail != '' && $toemail != '' && $message != '' && $name != ''){
-        	\Mail::to($toemail)->send(new message($data));
+        	
 
                     $mail = new Mail;
                     $mail->name = $name;
