@@ -10,7 +10,15 @@ use App\Transformers\UserBriefTransformer;
 
 class UserController extends Controller
 {
-
+    public function getAll()
+    {
+            $users = User::orderBy('finish', 'asc')->get();
+            return fractal()
+            ->collection($users)
+            ->parseIncludes([])
+            ->transformWith(new UserBriefTransformer)
+            ->toArray();
+    }
 
     public function find($id)
     {

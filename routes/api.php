@@ -25,6 +25,7 @@ Route::group(['prefix' => 'register'], function ($app) {
 
 Route::group(['middleware' => ['auth:api'], 'prefix' => 'user'], function ($app) {
     Route::get('{id}', 'UserController@find');
+    Route::get('getusers/all', 'UserController@getAll');
 });
 
 Route::post('password/email', 
