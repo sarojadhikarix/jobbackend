@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function getAll()
     {
-            $users = User::orderBy('finish', 'asc')->get();
+            $users = User::orderBy('id', 'desc')->get();
             return fractal()
             ->collection($users)
             ->parseIncludes([])
